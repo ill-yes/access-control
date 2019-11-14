@@ -18,6 +18,11 @@ class ApiController extends Controller
     public function store(Request $request)
     {
         $uid = $request->get('uid');
+        $user_id = $request->get('user_id');
+
+        if (is_null(User::where('id', $user_id)->where('admin', 1)->first())) {
+            return response()->json(['error' => 'Der Benutzer ist nicht berechtigt.'], 403);
+        }
 
         if (is_null(User::where('card_number', $uid)->first())) {
             do {
