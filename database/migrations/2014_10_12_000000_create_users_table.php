@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('pin')->nullable()->unique();
             $table->string('card_number')->nullable()->unique();
-            $table->boolean('blocked')->default(0);
+            $table->integer('fails')->default(0);
             $table->boolean('admin')->default(0);
             $table->rememberToken();
             $table->timestamp('last_seen')->nullable();

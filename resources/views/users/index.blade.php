@@ -23,9 +23,9 @@
                     </thead>
                     <tbody>
                     @foreach($users as $user)
-                        <tr>
+                        <tr{!! ($user->fails >= 3) ? ' class="text-danger"' : '' !!}>
                             <th scope="row">{{ $user->id }}</th>
-                            <td><a href="{{ route('users.show', $user) }}">{{ $user->name }}</a></td>
+                            <td><a href="{{ route('users.show', $user) }}"{!! ($user->fails >= 3) ? ' class="text-danger"' : '' !!}>{{ $user->name }}</a></td>
                             <td>{!! $user->last_seen ?: '<span class="text-muted">-/-</span>' !!}</td>
                             <td>{{ $user->admin }}</td>
                         </tr>

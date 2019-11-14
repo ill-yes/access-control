@@ -9,16 +9,6 @@ use Illuminate\Support\Facades\Hash;
 class ApiController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -38,16 +28,16 @@ class ApiController extends Controller
 
             $user = User::create([
                 'name' => $uid,
-                'email' => $uid . '@null.de',
+                'email' => $uid . '@acc.ess',
                 'password' => Hash::make('abcD123!'),
                 'pin' => $data['pin'],
                 'card_number' => $uid
             ]);
 
-            return response()->json(['user_id' => $user->id]);
+            return response()->json(['user_id' => $user->id, 'pin' => $user->pin], 201);
         }
 
-        return response()->json(['error' => 'Nutzer ist bereits vorhanden.']);
+        return response()->json(['error' => 'Nutzer ist bereits vorhanden.'], 409);
     }
 
     /**
@@ -64,7 +54,11 @@ class ApiController extends Controller
         $user = User::where('card_number', $uid)->first();
 
         if (is_null($user)) {
-            return response()->json(['error' => 'Karte nicht bekannt.']);
+            return response()->json(['error' => 'Karte nicht bekannt.'], 404);
+        }
+
+        if ($user->fails >= 3) {
+            return response()->json(['error' => 'Der Benutzer ist gesperrt.'], 403);
         }
 
         return response()->json(['user_id' => $user->id]);
@@ -73,17 +67,33 @@ class ApiController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param User $user
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function auth(User $user)
+    public function auth(Request $request)
     {
+        $user_id = $request->get('user_id');
+        $pin = $request->get('pin');
+
+        $user = User::where('id', $user_id)->first();
+
         if (is_null($user)) {
-            return response()->json(['error' => 'Karte nicht bekannt.']);
+            return response()->json(['error' => 'Der Benutzer konnte nicht gefunden werden!'], 404);
         }
 
-        return response()->json(['user_id' => $user->id]);
+        if ($user->fails >= 3) {
+            return response()->json(['error' => 'Der Benutzer ist gesperrt.'], 403);
+        }
+
+        if ($pin !== $user->pin) {
+            $user->update(['fails' => $user->fails + 1]);
+            return response()->json(['error' => 'Die Pin ist nicht korrekt.'], 403);
+        }
+
+        $user->update(['last_seen' => now()]);
+
+        return response()->json(['text' => 'Herzlich willkommen ' . $user->name . '!'], 201);
     }
 
     /**

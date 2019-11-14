@@ -21,7 +21,8 @@ class AdminSeed extends Seeder
             'name' => 'Malte Jesgarzewsky',
             'email' => 'malte.jesgarzewsky@uni-kassel.de',
             'password' => Hash::make('abcD123!'),
-            'pin' => $pin
+            'pin' => $pin,
+            'admin' => true
         ]);
     }
 }
