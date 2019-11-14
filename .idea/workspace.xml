@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9badbf9e-c98a-49dc-a914-769e2ee7f0da" name="Default Changelist" comment="" />
+    <list default="true" id="9badbf9e-c98a-49dc-a914-769e2ee7f0da" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/AdminSeed.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/AdminSeed.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +159,7 @@
       <workItem from="1573631641997" duration="8006000" />
       <workItem from="1573662872348" duration="3637000" />
       <workItem from="1573718599152" duration="118000" />
+      <workItem from="1573723102681" duration="759000" />
     </task>
     <servers />
   </component>
