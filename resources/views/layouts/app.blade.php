@@ -49,6 +49,16 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile') }}">{{ __('Profile') }}</a>
+                            </li>
+
+                            @if(Auth::user()->admin)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('userManagement') }}">{{ __('User Management') }}</a>
+                                </li>
+                            @endif
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

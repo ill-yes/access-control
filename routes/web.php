@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\ProfileController;
+
 Auth::routes();
 
 Route::redirect('/', '/home');
@@ -18,3 +20,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
 
+Route::get("users", 'UserController@index')->name('userManagement');
+Route::post("/users/setUserPin", 'UserController@setUserPin')->name("setUserPin");
+Route::post("/users/setAccountState", 'UserController@setAccountState')->name("setAccountState");
+
+Route::get("/profile", 'ProfileController@get')->name('profile');
+Route::post("/profile", 'ProfileController@setPin')->name("setPin");

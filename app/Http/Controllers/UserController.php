@@ -28,6 +28,45 @@ class UserController extends Controller
         return view('users.index', ['users' => User::all()]);
     }
 
+    public function setUserPin(Request $request)
+    {
+        $this->validate($request, [
+            'userId' => ['required', 'int'],
+            'newPin' => ['required', 'int', 'digits:4']
+        ]);
+
+        User::where('id',$request->userId)->update([
+            'pin' => $request->newPin
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function setAccountState(Request $request)
+    {
+        $this->validate($request, [
+            'userId' => ['required', 'int'],
+            'accountState' => ['required', 'string']
+        ]);
+
+
+        if ($request->accountState == "Enabled")
+        {
+            User::where('id',$request->userId)->update([
+                'fails' => 0
+            ]);
+        }
+        else{
+            User::where('id',$request->userId)->update([
+                'fails' => 3
+            ]);
+        }
+
+        return redirect()->back();
+    }
+    
+    
+
     public function show(User $user)
     {
         dd($user);
