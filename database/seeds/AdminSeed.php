@@ -23,7 +23,7 @@ class AdminSeed extends Seeder
             'password' => Hash::make('abcD123!'),
             'pin' => $pin,
             'admin' => true,
-            'card_numer' => '161581122'
+            'card_number' => '161581122'
         ]);
     }
 }
